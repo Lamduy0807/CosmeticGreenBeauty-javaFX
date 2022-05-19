@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Holder.UserHolder;
+import Model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -222,6 +224,7 @@ public class MainMenuController implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         try {
             DashBoardOnAction();
 
