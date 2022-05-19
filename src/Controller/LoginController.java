@@ -4,6 +4,9 @@
  */
 package Controller;
 
+import DAO.Implement.UserDAOImplement;
+import DAO.UserDAO;
+import Holder.UserHolder;
 import Model.User;
 import java.io.IOException;
 import java.net.URL;
@@ -37,13 +40,17 @@ public class LoginController implements Initializable{
     
     //public Connection con;
     
-    public void Login(ActionEvent e) throws IOException, SQLException
+    public void Login(ActionEvent e) throws IOException, SQLException, ClassNotFoundException
     {
         String Username = txtUsername.getText();
         String PW = txtPassword.getText();
         User user = new User(Username,PW);
         if(user.CheckAccount())
         {
+            User user2 = UserDAOImplement.getInstance().getUserInformationByUsername(user.getsUsername());
+            UserHolder holder = UserHolder.getInstance();
+            holder.setUser(user2);
+            
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("/View/MainMenu.fxml"));
@@ -67,6 +74,8 @@ public class LoginController implements Initializable{
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

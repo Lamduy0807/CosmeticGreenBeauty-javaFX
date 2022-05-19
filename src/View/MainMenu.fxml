@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="695.0" prefWidth="1088.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
+<AnchorPane id="AnchorPane" prefHeight="695.0" prefWidth="1239.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
    <children>
       <AnchorPane layoutX="-1.0" prefHeight="576.0" prefWidth="211.0" style="-fx-background-color: #218C2C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -107,7 +107,7 @@
                               <Image url="@../img/baseline_gite_white_24dp.png" />
                            </image>
                         </ImageView>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Supliers">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Suppliers">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -217,6 +217,6 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutX="211.0" prefHeight="67.0" prefWidth="806.0" style="-fx-background-color: #7FC666;" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <AnchorPane fx:id="Context" layoutX="211.0" layoutY="66.0" prefHeight="510.0" prefWidth="805.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0" />
+      <AnchorPane fx:id="Context" layoutX="211.0" layoutY="66.0" prefHeight="510.0" prefWidth="874.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0" />
    </children>
 </AnchorPane>

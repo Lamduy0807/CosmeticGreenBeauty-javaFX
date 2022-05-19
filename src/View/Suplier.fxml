@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SupplierController">
    <children>
-      <Text layoutX="311.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suplier" />
+      <JFXTextField fx:id="tbID" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="47.0" layoutY="37.0" prefHeight="25.0" prefWidth="324.0" promptText="ID" />
+      <JFXTextField fx:id="tbName" focusColor="#2d922d" labelFloat="true" layoutX="47.0" layoutY="110.0" prefHeight="25.0" prefWidth="324.0" promptText="Supplier Name" />
+      <JFXTextField fx:id="tbEmail" focusColor="#2d922d" labelFloat="true" layoutX="47.0" layoutY="178.0" prefHeight="25.0" prefWidth="324.0" promptText="Email" />
+      <JFXTextField fx:id="tbAddress" focusColor="#2d922d" labelFloat="true" layoutX="439.0" layoutY="64.0" prefHeight="92.0" prefWidth="324.0" promptText="Address" />
+      <JFXTextField fx:id="tbPhone" focusColor="#2d922d" labelFloat="true" layoutX="439.0" layoutY="178.0" prefHeight="25.0" prefWidth="324.0" promptText="Phone Number" />
+      <JFXButton fx:id="btnAdd" buttonType="RAISED" graphicTextGap="28.0" layoutX="843.0" layoutY="38.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Add" textFill="#189f0b">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/add%20(4).png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnEdit" buttonType="RAISED" graphicTextGap="28.0" layoutX="843.0" layoutY="98.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Edit" textFill="#ff8066">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/edit%20(5).png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" buttonType="RAISED" graphicTextGap="28.0" layoutX="843.0" layoutY="153.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Delete" textFill="RED">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/delete%20(2).png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="Suppliertb" layoutX="44.0" layoutY="257.0" prefHeight="354.0" prefWidth="946.0" stylesheets="@../css/fullpackstyling.css">
+         <columns>
+            <TableColumn fx:id="pIdCol" prefWidth="107.99996566772461" text="ID" />
+            <TableColumn fx:id="pNameCol" prefWidth="174.40003967285156" text="Supplier Name" />
+            <TableColumn fx:id="pEmailCol" prefWidth="241.5999755859375" text="Email" />
+            <TableColumn fx:id="pAddressCol" prefWidth="224.79998779296875" text="Address" />
+            <TableColumn fx:id="pPhoneCol" prefWidth="196.800048828125" text="Phone Number" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

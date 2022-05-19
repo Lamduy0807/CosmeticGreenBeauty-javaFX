@@ -17,7 +17,28 @@ import java.sql.SQLException;
 public class User {
     private String sUsername;
     private String sPassword;
+    private String sPosition;
+    private int iID;
+    private String sName;
+    private String sCitizenID;
+    private String sAddress;
+    private String sPhone;
+    private String sEmail;
 
+    public User(String sUsername, String sPassword, String sPosition, int iID, String sName, String sCitizenID, String sAddress, String sPhone, String sEmail) {
+        this.sUsername = sUsername;
+        this.sPassword = sPassword;
+        this.sPosition = sPosition;
+        this.iID = iID;
+        this.sName = sName;
+        this.sCitizenID = sCitizenID;
+        this.sAddress = sAddress;
+        this.sPhone = sPhone;
+        this.sEmail = sEmail;
+    }
+    
+    
+    
     public User(String sUsername, String sPassword) {
         this.sUsername = sUsername;
         this.sPassword = sPassword;
@@ -41,6 +62,63 @@ public class User {
     public void setsPassword(String sPassword) {
         this.sPassword = sPassword;
     }
+
+    public String getsPosition() {
+        return sPosition;
+    }
+
+    public void setsPosition(String sPosition) {
+        this.sPosition = sPosition;
+    }
+
+    public int getiID() {
+        return iID;
+    }
+
+    public void setiID(int iID) {
+        this.iID = iID;
+    }
+
+    public String getsName() {
+        return sName;
+    }
+
+    public void setsName(String sName) {
+        this.sName = sName;
+    }
+
+    public String getsCitizenID() {
+        return sCitizenID;
+    }
+
+    public void setsCitizenID(String sCitizenID) {
+        this.sCitizenID = sCitizenID;
+    }
+
+    public String getsAddress() {
+        return sAddress;
+    }
+
+    public void setsAddress(String sAddress) {
+        this.sAddress = sAddress;
+    }
+
+    public String getsPhone() {
+        return sPhone;
+    }
+
+    public void setsPhone(String sPhone) {
+        this.sPhone = sPhone;
+    }
+
+    public String getsEmail() {
+        return sEmail;
+    }
+
+    public void setsEmail(String sEmail) {
+        this.sEmail = sEmail;
+    }
+    
     Connection con;
     public boolean CheckAccount() throws SQLException
     {
