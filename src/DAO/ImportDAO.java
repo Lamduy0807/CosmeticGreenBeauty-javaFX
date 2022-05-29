@@ -4,9 +4,7 @@
  */
 package DAO;
 
-import Model.DetailImport;
 import Model.Import;
-import javafx.collections.ObservableList;
 
 /**
  *

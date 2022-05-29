@@ -1,10 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ImportController">
    <children>
-      <Button layoutX="235.0" layoutY="120.0" mnemonicParsing="false" text="Button" />
+      <TableView fx:id="DetailImporttb" layoutX="28.0" layoutY="14.0" prefHeight="226.0" prefWidth="602.0" stylesheets="@../css/fullpackstyling.css">
+        <columns>
+          <TableColumn fx:id="dpProIdCol" prefWidth="75.0" text="Product ID" />
+          <TableColumn fx:id="dpProNameCol" prefWidth="125.60003662109375" text="Product Name" />
+            <TableColumn fx:id="dpImportPriceCol" prefWidth="120.00001525878906" text="Import Price" />
+            <TableColumn fx:id="dpQuanCol" prefWidth="140.800048828125" text="Quantities" />
+            <TableColumn fx:id="dpTotalCol" prefWidth="141.60003662109375" text="Total Price" />
+        </columns>
+      </TableView>
+      <TableView fx:id="Producttb" layoutX="28.0" layoutY="298.0" prefHeight="313.0" prefWidth="602.0" stylesheets="@../css/fullpackstyling.css">
+         <columns>
+            <TableColumn fx:id="pIdCol" prefWidth="75.0" text="Product ID" />
+            <TableColumn fx:id="pNameCol" prefWidth="100.53337097167969" text="Product Name" />
+            <TableColumn fx:id="pPriceCol" prefWidth="99.46670532226562" text="Import price" />
+            <TableColumn fx:id="pDescriptionCol" prefWidth="71.73333740234375" text="Description" />
+            <TableColumn fx:id="pOriginalCol" prefWidth="94.39999389648438" text="Origin" />
+            <TableColumn fx:id="pUnitCol" prefWidth="63.999969482421875" text="Unit" />
+            <TableColumn fx:id="pTypeCol" prefWidth="100.0" text="Type name" />
+         </columns>
+      </TableView>
+      <Pane layoutX="755.0" layoutY="2.0" prefHeight="628.0" prefWidth="397.0" stylesheets="@../css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXTextField fx:id="tbProductID" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="37.0" layoutY="27.0" prefHeight="25.0" prefWidth="324.0" promptText="Product ID" />
+            <JFXTextField fx:id="tbImportPrice" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="37.0" layoutY="132.0" prefHeight="25.0" prefWidth="324.0" promptText="Import price" />
+            <JFXTextField fx:id="tbProductName" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="37.0" layoutY="78.0" prefHeight="25.0" prefWidth="324.0" promptText="Product Name" />
+            <JFXTextField fx:id="tbQuantities" focusColor="#2d922d" labelFloat="true" layoutX="37.0" layoutY="184.0" onKeyTyped="#handleCalculatePrice" prefHeight="25.0" prefWidth="146.0" promptText="Quantities" />
+            <JFXTextField fx:id="tbPrice" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="215.0" layoutY="184.0" prefHeight="25.0" prefWidth="146.0" promptText="Price" />
+            <JFXButton fx:id="btnAdd" buttonType="RAISED" graphicTextGap="28.0" layoutX="37.0" layoutY="238.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Add" textFill="#189f0b">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/add%20(4).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" buttonType="RAISED" graphicTextGap="28.0" layoutX="215.0" layoutY="238.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Edit" textFill="#ff8066">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/edit%20(5).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnCancel" buttonType="RAISED" graphicTextGap="28.0" layoutX="215.0" layoutY="300.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Cancel" textFill="CRIMSON">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cancel-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" buttonType="RAISED" graphicTextGap="28.0" layoutX="37.0" layoutY="300.0" onAction="#handle" prefHeight="49.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Delete" textFill="RED">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/delete%20(2).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXComboBox fx:id="cbSupplier" focusColor="#2d922d" labelFloat="true" layoutX="37.0" layoutY="395.0" onInputMethodTextChanged="#handleCalculatePrice" prefHeight="37.0" prefWidth="324.0" promptText="Select Supplier" />
+            <JFXButton fx:id="btnCreate" graphicTextGap="28.0" layoutX="87.0" layoutY="553.0" onAction="#handle" prefHeight="49.0" prefWidth="224.0" style="-fx-border-color: #000;" text="Create Form" textFill="#189f0b">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/add%20(4).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <Text layoutX="149.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtTotal" layoutX="215.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <JFXTextField fx:id="tbSearch" focusColor="#2d922d" labelFloat="true" layoutX="28.0" layoutY="254.0" prefHeight="25.0" prefWidth="324.0" promptText="Search for Product's name or ID..." />
    </children>
 </AnchorPane>

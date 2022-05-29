@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  */
 public class ImportDAOImplement implements ImportDAO {
 
-    private static ImportDAO instance;
+   private static ImportDAO instance;
    private Connection connection;
    private static final Logger LOG = Logger.getLogger(ImportDAO.class.getName());
    private ImportDAOImplement() throws ClassNotFoundException{

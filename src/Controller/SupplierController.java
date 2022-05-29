@@ -4,9 +4,7 @@
  */
 package Controller;
 
-import DAO.Implement.ProductDAOImplement;
 import DAO.Implement.SupplierDAOImplement;
-import Model.Product;
 import Model.Supplier;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -14,7 +12,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

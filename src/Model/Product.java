@@ -9,13 +9,35 @@ package Model;
  * @author Admin
  */
 public class Product {
-     private int Product_id;
-     private String ProductName;
-     private float Price;
-     private String Unit;
-     private String Description;
-     private String Original;
-     private String ProductType;
+
+    private int Product_id;
+    private String ProductName;
+    private float Price;
+    private String Unit;
+    private String Description;
+    private String Original;
+    private int Quantities;
+    private String ProductType;
+
+    public Product(int Product_id, String ProductName, float Price, String Unit, String Description, String Original, int Quantities, String ProductType) {
+        this.Product_id = Product_id;
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.Unit = Unit;
+        this.Description = Description;
+        this.Original = Original;
+        this.Quantities=  Quantities;
+        this.ProductType = ProductType;
+    }
+
+    public Product(String ProductName, float Price, String Unit, String Description, String Original, String ProductType) {
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.Unit = Unit;
+        this.Description = Description;
+        this.Original = Original;
+        this.ProductType = ProductType;
+    }
 
     public Product(int Product_id, String ProductName, float Price, String Unit, String Description, String Original, String ProductType) {
         this.Product_id = Product_id;
@@ -25,6 +47,34 @@ public class Product {
         this.Description = Description;
         this.Original = Original;
         this.ProductType = ProductType;
+    }
+    
+    
+
+    public int getQuantities() {
+        return Quantities;
+    }
+
+    public void setQuantities(int Quantities) {
+        this.Quantities = Quantities;
+    }
+
+    public Product(String ProductName, float Price, String Unit, String Description, String Original, int Quantities, String ProductType) {
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.Unit = Unit;
+        this.Description = Description;
+        this.Original = Original;
+        this.Quantities=  Quantities;
+        this.ProductType = ProductType;
+    }
+
+    public Product() {
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "Product_id=" + Product_id + ", ProductName=" + ProductName + ", Price=" + Price + ", Unit=" + Unit + ", Description=" + Description + ", Original=" + Original + ", ProductType=" + ProductType + '}';
     }
 
     public int getProduct_id() {
@@ -82,5 +132,5 @@ public class Product {
     public void setProductType(String ProductType) {
         this.ProductType = ProductType;
     }
-    
+
 }
