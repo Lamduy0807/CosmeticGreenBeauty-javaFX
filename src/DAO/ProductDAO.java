@@ -14,4 +14,8 @@ import javafx.collections.ObservableList;
 public interface ProductDAO {
     ObservableList<Product> getListOfProduct();
     ObservableList<Product> searchProduct(String search);
+    Product getById(int product_id);
+    int addProduct(Product product);
+    int updateProduct(Product product);
+    int deleteProduct(int product_id);
 }

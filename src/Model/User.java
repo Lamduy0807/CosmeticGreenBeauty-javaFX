@@ -25,6 +25,11 @@ public class User {
     private String sPhone;
     private String sEmail;
 
+    @Override
+    public String toString() {
+        return "User{" + "sUsername=" + sUsername + ", sPassword=" + sPassword + ", sPosition=" + sPosition + ", iID=" + iID + ", sName=" + sName + ", sCitizenID=" + sCitizenID + ", sAddress=" + sAddress + ", sPhone=" + sPhone + ", sEmail=" + sEmail + ", con=" + con + '}';
+    }
+
     public User(String sUsername, String sPassword, String sPosition, int iID, String sName, String sCitizenID, String sAddress, String sPhone, String sEmail) {
         this.sUsername = sUsername;
         this.sPassword = sPassword;
