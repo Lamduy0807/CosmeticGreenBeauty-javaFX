@@ -8,7 +8,8 @@ import Model.DetailExport;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for DetailExport
  */
 public interface DetailExportDAO {
     boolean InsertToDatabase(DetailExport detail, int id);

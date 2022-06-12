@@ -8,7 +8,8 @@ import Model.Export;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for Eport
  */
 public interface ExportDAO {
     String InsertNewExport (Export impor);

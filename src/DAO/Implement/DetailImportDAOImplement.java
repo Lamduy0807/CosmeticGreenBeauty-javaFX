@@ -15,7 +15,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is an implement for DetailImportDAO
  */
 public class DetailImportDAOImplement implements DetailImportDAO{
     private static DetailImportDAO instance;
@@ -31,6 +32,7 @@ public class DetailImportDAOImplement implements DetailImportDAO{
        }
        return instance;
    }
+   //Insert data into DetailImportForm in database
     @Override
     public boolean InsertToDatabase(DetailImport detail, int id) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

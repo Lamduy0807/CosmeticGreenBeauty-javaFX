@@ -23,7 +23,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.Notifications;
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is responsible as a controller for supplier.fxml in folder View
  */
 public class SupplierController implements Initializable, EventHandler<ActionEvent>{
     @FXML
@@ -68,7 +69,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
     @FXML
     private TableColumn<Supplier, String> pPhoneCol;
     
-    
+    //handle event for each button
     @Override
     public void handle(ActionEvent event) {
         if(event.getSource()== btnAdd)
@@ -160,6 +161,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
         
         
     }
+    //fill data in to supplier table
     private void FillData() throws ClassNotFoundException{
         ObservableList<Supplier> suppliers = SupplierDAOImplement.getInstance().getListOfSuplier();
         Suppliertb.setItems(suppliers);
@@ -188,6 +190,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
         });
         
     }
+    //handle event when click into a row in suplier table
     private void selectItem(Supplier supplier) {
         
             tbID.setText(String.valueOf(supplier.getSuplier_Id()));
@@ -196,6 +199,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
             tbAddress.setText(supplier.getAddress());
             tbPhone.setText(supplier.getPhoneNumber());
     }
+    //handle for clear data in textfield
     public void ClearData(){
         tbID.setText("");
         tbName.setText("");

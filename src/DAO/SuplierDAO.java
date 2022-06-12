@@ -9,7 +9,8 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for Suplier
  */
 public interface SuplierDAO {
     ObservableList<Supplier> getListOfSuplier();

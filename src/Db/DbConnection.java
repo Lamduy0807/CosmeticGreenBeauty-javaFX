@@ -10,10 +10,10 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Admin
+ * @author Duy
  */
 public class DbConnection {
-
+    //Connect to database
     public static Connection getConnection(String sqlServer, String dbName) throws ClassNotFoundException {
         Connection conn = null;
         try {
@@ -27,8 +27,8 @@ public class DbConnection {
     }
 
     public static Connection getConnect() throws ClassNotFoundException {
-//        Connection conn = getConnection("DESKTOP-1I3F1F7\\SQLEXPRESS", "ComesticDB");
-        Connection conn = getConnection("DESKTOP-6NG98G3\\SQLEXPRESS", "ComesticDB");
+        Connection conn = getConnection("DESKTOP-1I3F1F7\\SQLEXPRESS", "ComesticDB");
+        //Connection conn = getConnection("DESKTOP-6NG98G3\\SQLEXPRESS", "ComesticDB");
         return conn;
     }
 }

@@ -17,7 +17,8 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is an implementation for SuplierDAO file
  */
 public class SupplierDAOImplement implements SuplierDAO{
 
@@ -34,6 +35,7 @@ public class SupplierDAOImplement implements SuplierDAO{
        }
        return instance;
    }
+   //Get data form resultset and convert into Supplier model
    private Supplier setDataIntoResultSet(ResultSet r) throws SQLException{
       String id = r.getString(1);
       int iId = Integer.parseInt(id);
@@ -43,6 +45,7 @@ public class SupplierDAOImplement implements SuplierDAO{
       String email = r.getString(5);
       return new Supplier(iId, name, email, phone, add);
    }
+   //get All supplier in database
     @Override
     public ObservableList<Supplier> getListOfSuplier() {
         String sql = "SELECT Supplier_id, SuplierName, Address, PhoneNumber, Email from Supplier";
@@ -63,7 +66,7 @@ public class SupplierDAOImplement implements SuplierDAO{
             }
             return suppliers;
     }
-
+    //get supllier by supplier's name
     @Override
     public Supplier getSupplierByName(String name) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -84,7 +87,7 @@ public class SupplierDAOImplement implements SuplierDAO{
             }
             return supplier;
     }
-
+    //Add a new supplier to database
     @Override
     public boolean AddSupplier(Supplier suplier) {
         String sql = "INSERT INTO Supplier (SuplierName, Address,PhoneNumber, Email) VALUES (?, ?, ?, ?)";
@@ -103,7 +106,7 @@ public class SupplierDAOImplement implements SuplierDAO{
     }
     return false;
     }
-
+    //Delete an supllier from database
     @Override
     public boolean DeleteSupplier(int id) {
         String sql = "DELETE Supplier WHERE Supplier_id = '"+ id +"'";
@@ -117,7 +120,7 @@ public class SupplierDAOImplement implements SuplierDAO{
     }
     return false;
     }
-
+    //Update a supplier's information from database
     @Override
     public boolean EditSupplier(Supplier supplier) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
