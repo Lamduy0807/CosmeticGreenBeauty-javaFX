@@ -8,7 +8,8 @@ import Model.User;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is a Userholder, purpose: authentication
  */
 public final class UserHolder {
     private User user;

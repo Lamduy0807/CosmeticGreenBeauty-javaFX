@@ -20,7 +20,8 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is an implementation for ReportDAO file
  */
 public class ReportDAOImplement implements ReportDAO{
 
@@ -37,6 +38,7 @@ public class ReportDAOImplement implements ReportDAO{
        }
        return instance;
    }
+   //Get top 10 Product by Order from database
     @Override
     public ObservableList<TopProduct> getTop10Product() {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -60,7 +62,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return topproducts;
     }
-
+    //Get product sold in a month
     @Override
     public String getProductMonth(String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -81,7 +83,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //Get product sold in a day
     @Override
     public String getProductDay(String day, String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -106,7 +108,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //get bill created in a month
     @Override
     public String getBillMonth(String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -127,7 +129,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //get bill created in a day
     @Override
     public String getBillDay(String day, String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -148,7 +150,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //get revenue in a month
     @Override
     public String getRevenueMonth(String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -169,7 +171,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //get revenue in a day
     @Override
     public String getRevenueDay(String day, String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -190,7 +192,7 @@ public class ReportDAOImplement implements ReportDAO{
             }
             return String.valueOf(quan);
     }
-
+    //Get data for Line Chart from database
     @Override
     public ObservableList<LineData> getLineData(String month, String year) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

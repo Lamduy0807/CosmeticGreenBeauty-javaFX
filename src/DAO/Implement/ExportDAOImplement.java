@@ -15,7 +15,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is an implement for ExportDAO
  */
 public class ExportDAOImplement implements ExportDAO{
     private static ExportDAO instance;
@@ -31,7 +32,7 @@ public class ExportDAOImplement implements ExportDAO{
        }
        return instance;
    }
-
+   // Insert data to ExportForm in database
     @Override
     public String InsertNewExport(Export impor) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

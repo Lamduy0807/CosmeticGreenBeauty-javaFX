@@ -10,7 +10,8 @@ import Model.User;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for User
  */
 public interface UserDAO {
     User getUserInformationByUsername(String un);

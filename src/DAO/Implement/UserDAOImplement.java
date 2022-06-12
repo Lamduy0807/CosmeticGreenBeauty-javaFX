@@ -19,7 +19,8 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is an implementation for UserDAO
  */
 public class UserDAOImplement implements UserDAO{
     private static UserDAO instance;
@@ -35,6 +36,7 @@ public class UserDAOImplement implements UserDAO{
        }
        return instance;
    }
+   //Get data from resultset and convert into User model
    private User setDataIntoResultSet(ResultSet r) throws SQLException{
       String id = r.getString(1);
       int iId = Integer.parseInt(id);
@@ -49,6 +51,7 @@ public class UserDAOImplement implements UserDAO{
       String pass = r.getString(9);
       return new User(username, pass, position, iId, name, citizen, add, phone, email);
    }
+   //get User's information by user's name
     @Override
     public User getUserInformationByUsername(String un) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

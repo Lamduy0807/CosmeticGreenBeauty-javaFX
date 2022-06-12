@@ -8,7 +8,8 @@ import Model.Import;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for Import
  */
 public interface ImportDAO {
     String InsertNewImport (Import impor);

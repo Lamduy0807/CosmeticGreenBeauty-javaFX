@@ -37,7 +37,8 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.Notifications;
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is a controller for Export.fxml file
  */
 public class ExportController implements Initializable, EventHandler<ActionEvent> {
      @FXML
@@ -192,7 +193,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         btnCancel.setDisable(true);
         btnCreate.setDisable(true);
     }
-
+    //handle Click event for each button
     @Override
     public void handle(ActionEvent event) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -356,12 +357,13 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             }
         }
     }
-    
+    //handle select a row in product table
     private void selectItem(Product product) {
         tbProductID.setText(String.valueOf(product.getProduct_id()));
         tbProductName.setText(product.getProductName());
         tbExportPrice.setText(String.valueOf(product.getPrice()));
     }
+    //handle select a row in detailt table
     private void selectItemExported(DetailExport DT) {
         if(!detailexports.isEmpty())
         {
@@ -372,10 +374,12 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(String.valueOf(DT.getTotal()));
         }
     }
+    //Fill data from datbase into Product table
     private void FillData() throws ClassNotFoundException{
         ObservableList<Product> products = ProductDAOImplement.getInstance().getListOfProduct();
         Producttb.setItems(products);
     }
+    //calculate price when textbox quantities changed
     public void handleCalculatePrice(){
         if(!"".equals(tbQuantities.getText()) && !"".equals(tbExportPrice.getText())) {
             float importprice = Float.parseFloat(tbExportPrice.getText());
@@ -384,6 +388,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(Float.toString(result));
         }
     }
+    //Calculate total proce for all items added 
     public void handelCalculateTotal(){
         float total = 0;
         for(DetailExport di: detailexports){
@@ -392,6 +397,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         
         txtTotal.setText(Float.toString(total));
     }
+    //Clear data
     public void ClearData(){
         tbProductID.setText("");
         tbExportPrice.setText("");

@@ -15,7 +15,8 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is ImportDAO implementation
  */
 public class ImportDAOImplement implements ImportDAO {
 
@@ -32,6 +33,7 @@ public class ImportDAOImplement implements ImportDAO {
        }
        return instance;
    }
+   //Insert data to ImportForm in database
     @Override
     public String InsertNewImport(Import impor) {
         String sql ="INSERT INTO ImportForm (Employee_id, Suplier_id,FormDate,TotalPrice) VALUES (?, ?, ?, ?)"

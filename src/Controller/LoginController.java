@@ -5,7 +5,6 @@
 package Controller;
 
 import DAO.Implement.UserDAOImplement;
-import DAO.UserDAO;
 import Holder.UserHolder;
 import Model.User;
 import java.io.IOException;
@@ -23,12 +22,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.sql.SQLException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is a controller for Login.fxml
  */
 public class LoginController implements Initializable{
 
@@ -37,15 +41,25 @@ public class LoginController implements Initializable{
     
     @FXML
     public Button buttonLogin;
-    
-    //public Connection con;
-    
+    @FXML
+    private ImageView btnClose;
+   
     public void Login(ActionEvent e) throws IOException, SQLException, ClassNotFoundException
     {
         String Username = txtUsername.getText();
         String PW = txtPassword.getText();
+        //check Password and Username null or not
+        if("".equals(PW)||"".equals(Username))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Username or password can not be blank!");
+            alert.show();
+        }
+        else{
+        //check for Username and Password is the same in Database or not
         User user = new User(Username,PW);
-        if(user.CheckAccount())
+            if(user.CheckAccount())
         {
             User user2 = UserDAOImplement.getInstance().getUserInformationByUsername(user.getsUsername());
             UserHolder holder = UserHolder.getInstance();
@@ -61,11 +75,18 @@ public class LoginController implements Initializable{
             stage.centerOnScreen();
         }
         else
-            System.out.print("PW not corect");
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Wrong username or password");
+            alert.show();
+        }
+    }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        btnClose.setOnMouseClicked(e->handleClose());
         buttonLogin.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent t) {
@@ -81,6 +102,15 @@ public class LoginController implements Initializable{
             }
             
         });
-    }   
-    
+    }
+    //handle for close event
+    public void handleClose(){
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Exit");
+       alert.setContentText("Do you want to logout?");
+       if(alert.showAndWait().get()==ButtonType.OK)
+       {
+           Platform.exit();
+       }
+    }
 }

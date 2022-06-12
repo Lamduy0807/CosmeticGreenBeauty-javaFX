@@ -10,7 +10,8 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * DAO interface for Report
  */
 public interface ReportDAO {
     ObservableList<TopProduct> getTop10Product();

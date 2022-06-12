@@ -35,7 +35,8 @@ import javafx.scene.text.Text;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is a controller for Report.fxml in View folder
  */
 public class ReportController implements Initializable, EventHandler<ActionEvent>{
     
@@ -112,6 +113,7 @@ public class ReportController implements Initializable, EventHandler<ActionEvent
         });
         
     }
+    // Add value to the chart by month and year
     private void addValueToLineChart(String month, String year) throws ClassNotFoundException{
         ObservableList<LineData> linedatas = ReportDAOImplement.getInstance().getLineData(month, year);
         
@@ -124,10 +126,12 @@ public class ReportController implements Initializable, EventHandler<ActionEvent
         }
         chartMonth.getData().addAll(seri);
     }
+    //Fill data to Top10tb (Top 10 products table)
     private void FillData() throws ClassNotFoundException{
         ObservableList<TopProduct> topproducts = ReportDAOImplement.getInstance().getTop10Product();
         Top10tb.setItems(topproducts);
     }
+    //set Data for callendar
     private void setData(LocalDate ld) throws ClassNotFoundException{
         String day = String.valueOf(ld.getDayOfMonth());
         String month = String.valueOf(ld.getMonthValue());
@@ -151,6 +155,7 @@ public class ReportController implements Initializable, EventHandler<ActionEvent
     public void handle(ActionEvent t) {
         
     }
+    //get localdate
     public static final LocalDate NowDate(){
         String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

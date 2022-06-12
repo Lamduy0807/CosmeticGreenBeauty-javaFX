@@ -36,7 +36,8 @@ import org.controlsfx.control.Notifications;
 
 /**
  *
- * @author Admin
+ * @author Duy
+ * this file is a controller for Import.fxml
  */
 public class ImportController implements Initializable, EventHandler<ActionEvent> {
 
@@ -181,13 +182,13 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         btnCancel.setDisable(true);
         btnCreate.setDisable(true);
     }
-
+    //handle select a row in product table
     private void selectItem(Product product) {
         tbProductID.setText(String.valueOf(product.getProduct_id()));
         tbProductName.setText(product.getProductName());
         tbImportPrice.setText(String.valueOf(product.getPrice()));
     }
-
+    //handle select a row in detailt table
     private void selectItemImported(DetailImport DT) {
         if (!detailimports.isEmpty()) {
             tbProductID.setText(String.valueOf(DT.getProduct_id()));
@@ -197,19 +198,19 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(String.valueOf(DT.getTotal()));
         }
     }
-
+    //Fill data from datbase into Product table
     private void FillData() throws ClassNotFoundException {
         ObservableList<Product> products = ProductDAOImplement.getInstance().getListOfProduct();
         Producttb.setItems(products);
     }
-
+    //fill data form database into combobox
     private void FillDataCombobox() throws ClassNotFoundException {
         ObservableList<Supplier> suppliers = SupplierDAOImplement.getInstance().getListOfSuplier();
         for (Supplier sup : suppliers) {
             cbSupplier.getItems().add(sup.getSuplierName());
         }
     }
-
+    //calculate price when textbox quantities changed
     public void handleCalculatePrice() {
         if (!"".equals(tbQuantities.getText()) && !"".equals(tbImportPrice.getText())) {
             float importprice = Float.parseFloat(tbImportPrice.getText());
@@ -218,7 +219,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(Float.toString(result));
         }
     }
-
+    //Calculate total proce for all items added 
     public void handelCalculateTotal() {
         float total = 0;
         for (DetailImport di : detailimports) {
@@ -227,7 +228,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
 
         txtTotal.setText(Float.toString(total));
     }
-
+    //Clear data in textboxes, text and combobox
     public void ClearData() {
         tbProductID.setText("");
         tbImportPrice.setText("");
@@ -235,7 +236,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         tbQuantities.setText("");
         tbPrice.setText("");
     }
-
+    // handle event for each button
     @Override
     public void handle(ActionEvent event) {
 

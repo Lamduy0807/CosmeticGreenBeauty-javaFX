@@ -38,7 +38,6 @@
 .button1
 {
 -fx-background-color : #218C2C;
--fx-background-radius :  20 0 0 20;
 }
 .active{
     -fx-background-color: #D7D974;
@@ -46,12 +45,10 @@
 .button1:hover
 {
 -fx-background-color : #2A9835 ;
--fx-background-radius :  20 0 0 20;
 }
 .button1:pressed
 {
 -fx-background-color : #237B2C ;
--fx-background-radius :  20 0 0 20;
 }
 .menu__btn{
     -fx-background-color : #218C2C;
