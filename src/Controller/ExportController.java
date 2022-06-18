@@ -119,6 +119,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //Set value for ProductTable
         pIdCol.setCellValueFactory(new PropertyValueFactory<>("Product_id"));
         pNameCol.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         pPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -127,6 +128,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         pOriginalCol.setCellValueFactory(new PropertyValueFactory<>("Original"));
         pTypeCol.setCellValueFactory(new PropertyValueFactory<>("ProductType"));
         
+        //Set title for Detail Table
         dpProIdCol.setCellValueFactory(new PropertyValueFactory<>("Product_id"));
         dpProNameCol.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         dpExportPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -134,6 +136,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         dpTotalCol.setCellValueFactory(new PropertyValueFactory<>("Total"));
         
         try {
+            //Fill Data to the Table
             FillData();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ImportController.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,11 +202,26 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         if(event.getSource()== btnAdd)
         {
+            Product Pro = new Product();
+            
             int id = Integer.parseInt(tbProductID.getText());
-            String name = tbProductName.getText();
-            float exportprice = Float.parseFloat(tbExportPrice.getText());
             int quan = Integer.parseInt(tbQuantities.getText());
+            float exportprice = Float.parseFloat(tbExportPrice.getText());
             float price = Float.parseFloat(tbPrice.getText());
+            
+            try {
+                Pro = ProductDAOImplement.getInstance().getById(id);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ExportController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(Pro.getQuantities()<quan)
+            {
+                Notifications.create().title("ERROR").text("The quantites of this product in houseware is not enough!!!" )
+                  .showError();
+            }
+            else{
+            String name = tbProductName.getText();
+            
             float tem = 0;
             
             boolean isFound = false;
@@ -240,6 +258,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             btnEdit.setDisable(true);
             btnDelete.setDisable(true);
             ClearData();
+           }
         }
         else if(event.getSource()== btnEdit){
             int id = Integer.parseInt(tbProductID.getText());
@@ -323,7 +342,8 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
                     boolean flag = true;
                     for(DetailExport DT: detailexports)
                     {
-                        flag = DetailExportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                        DetailExportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                        flag = ProductDAOImplement.getInstance().UpdateQuantities(DT.getProduct_id(),DT.getQuantity()*(-1));
                     }
                     System.out.print(flag? "success" : "fail");
                     if(flag)

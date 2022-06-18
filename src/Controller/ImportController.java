@@ -354,7 +354,8 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
                         int ID = Integer.parseInt(id);
                         boolean flag = true;
                         for (DetailImport DT : detailimports) {
-                            flag = DetailImportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                            DetailImportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                            flag = ProductDAOImplement.getInstance().UpdateQuantities(DT.getProduct_id(), DT.getQuantities());
                         }
                         System.out.print(flag ? "success" : "fail");
                         if (flag) {
