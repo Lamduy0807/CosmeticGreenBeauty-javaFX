@@ -46,6 +46,7 @@ public class LoginController implements Initializable{
    
     public void Login(ActionEvent e) throws IOException, SQLException, ClassNotFoundException
     {
+        //Login into system
         String Username = txtUsername.getText();
         String PW = txtPassword.getText();
         //check Password and Username null or not

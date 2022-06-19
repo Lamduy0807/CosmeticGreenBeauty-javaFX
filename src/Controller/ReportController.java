@@ -72,19 +72,16 @@ public class ReportController implements Initializable, EventHandler<ActionEvent
 
     @FXML
     private LineChart<Number, Number> chartMonth;
-    @FXML
-    private CategoryAxis xAxis;
 
-    @FXML
-    private NumberAxis yAxis;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               
+        //Set value for Top10tb
         colProductName.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         colSold.setCellValueFactory(new PropertyValueFactory<>("Quantities"));
         
         try {
+            //Fill data into Top10tb
             FillData();
             
         } catch (ClassNotFoundException ex) {
@@ -93,16 +90,19 @@ public class ReportController implements Initializable, EventHandler<ActionEvent
         
         LocalDate l = NowDate();
         datePicker.setValue(l);
+        //Get Time now
         try {
+            //Set Data into Line Chart
             setData(l);
-            //addValueToLineChart(String.valueOf(l.getMonthValue()), String.valueOf(l.getYear()));
-            addValueToLineChart("12","2021");
+            addValueToLineChart(String.valueOf(l.getMonthValue()), String.valueOf(l.getYear()));
+            //addValueToLineChart("12","2021");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //Handle when DatePicker change
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
             try {
+                //Set Data into Line Chart with the date
                 setData(newValue);
                 chartMonth.getData().clear();
                 chartMonth.getData().removeAll();

@@ -141,6 +141,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ImportController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Get the data from Producttb's row and convert into text
         Producttb.getSelectionModel().selectedItemProperty().addListener(
         (observable, oldValue, newValue) -> {
           if(!Bindings.isEmpty(Producttb.getItems()).get())
@@ -153,6 +154,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
           }
             
         });
+        //Get the data from DetailExporttb's row and convert into text
         DetailExporttb.getSelectionModel().selectedItemProperty().addListener(
         (observable, oldValue, newValue) -> {
           selectItemExported(newValue);
@@ -160,11 +162,12 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
           btnDelete.setDisable(false);
           btnEdit.setDisable(false);
         });
-        
+        //Handle when tbSearch change
         tbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                 //System.out.println("textfield changed from " + oldValue + " to " + newValue);
                 if(!"".equals(newValue))
                 {
+                    //Get the data of Product from Database when tbSearch Change
                     ObservableList<Product> products = FXCollections.observableArrayList();
                     try {
                         products = ProductDAOImplement.getInstance().searchProduct(newValue);
@@ -182,6 +185,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
                     }
                 }
         });
+        //Check wheather tbQuantities contains value different with numbers or not (using RE)
         tbQuantities.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("^[0-9]+$")&& !"".equals(newValue))
             {
@@ -214,12 +218,14 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ExportController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            //Check for the quantities in Database is enough for exporting?
             if(Pro.getQuantities()<quan)
             {
                 Notifications.create().title("ERROR").text("The quantites of this product in houseware is not enough!!!" )
                   .showError();
             }
             else{
+             //Add value to DetailExporttb
             String name = tbProductName.getText();
             
             float tem = 0;
@@ -229,6 +235,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             {
                 if(DT.getProduct_id() == id)
                 {
+                    //Check if DetailExporttb's already had that product or not
                     int temp = DT.getQuantity();
                     DT.setQuantity(quan+temp);
                     float temp2 = DT.getTotal();
@@ -261,6 +268,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
            }
         }
         else if(event.getSource()== btnEdit){
+            //Get value from texts
             int id = Integer.parseInt(tbProductID.getText());
             int quan = Integer.parseInt(tbQuantities.getText());
             float price = Float.parseFloat(tbPrice.getText());
@@ -269,6 +277,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             {
                 if(DT.getProduct_id() == id)
                 {
+                    //Set update value to the product 
                     temp = DT.getTotal();
                     DT.setQuantity(quan);
                     DT.setTotal(price);
@@ -296,6 +305,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             
         }
         else if(event.getSource()== btnDelete){
+            //Delete a value in DetailExporttb
             int id = Integer.parseInt(tbProductID.getText());
             float temp = 0;
             int index = 0;
@@ -321,6 +331,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             ClearData();
         }
         else if(event.getSource()== btnCreate){
+            //Create a Export form
             if("".equals(tbExportReason.getText()))
             {
                 Notifications.create().title("ERROR").text("You must fill Export reason!!!")
@@ -330,6 +341,7 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
             {
             UserHolder holder = UserHolder.getInstance();
             User u = holder.getUser();
+            //Get the employee's ID through UserHolder
             int Id = u.getiID();
             String reason = tbExportReason.getText();
             float total = Float.parseFloat(txtTotal.getText()); 
@@ -342,7 +354,9 @@ public class ExportController implements Initializable, EventHandler<ActionEvent
                     boolean flag = true;
                     for(DetailExport DT: detailexports)
                     {
+                        //Insert Data to DetailExportForm
                         DetailExportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                        //Substract quantitties in Product's quantitites
                         flag = ProductDAOImplement.getInstance().UpdateQuantities(DT.getProduct_id(),DT.getQuantity()*(-1));
                     }
                     System.out.print(flag? "success" : "fail");
