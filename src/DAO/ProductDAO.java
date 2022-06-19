@@ -18,4 +18,5 @@ public interface ProductDAO {
     int addProduct(Product product);
     int updateProduct(Product product);
     int deleteProduct(int product_id);
+    boolean UpdateQuantities(int product_id, int quantities);
 }

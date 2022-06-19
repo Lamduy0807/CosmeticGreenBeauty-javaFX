@@ -111,6 +111,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Set value for ProductTable
         pIdCol.setCellValueFactory(new PropertyValueFactory<>("Product_id"));
         pNameCol.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         pPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -118,7 +119,8 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         pDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
         pOriginalCol.setCellValueFactory(new PropertyValueFactory<>("Original"));
         pTypeCol.setCellValueFactory(new PropertyValueFactory<>("ProductType"));
-
+        
+        //Set title for Detail Table
         dpProIdCol.setCellValueFactory(new PropertyValueFactory<>("Product_id"));
         dpProNameCol.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         dpImportPriceCol.setCellValueFactory(new PropertyValueFactory<>("ImportPrice"));
@@ -126,11 +128,13 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         dpTotalCol.setCellValueFactory(new PropertyValueFactory<>("Total"));
 
         try {
+            //Fill Data to the Product Table
             FillData();
             FillDataCombobox();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ImportController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Get the data from Producttb's row and convert into text
         Producttb.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (!Bindings.isEmpty(Producttb.getItems()).get()) {
@@ -142,6 +146,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
                     }
 
                 });
+        //Get the data from DetailExporttb's row and convert into text
         DetailImporttb.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     selectItemImported(newValue);
@@ -149,12 +154,13 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
                     btnDelete.setDisable(false);
                     btnEdit.setDisable(false);
                 });
-
+        //Handle when tbSearch change
         tbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             //System.out.println("textfield changed from " + oldValue + " to " + newValue);
             if (!"".equals(newValue)) {
                 ObservableList<Product> products = FXCollections.observableArrayList();
                 try {
+                    //Get the data of Product from Database when tbSearch Change
                     products = ProductDAOImplement.getInstance().searchProduct(newValue);
                     Producttb.setItems(products);
                     Producttb.refresh();
@@ -169,6 +175,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
                 }
             }
         });
+        //Check wheather tbQuantities contains value different with numbers or not (using RE)
         tbQuantities.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
                 tbQuantities.setText(oldValue);
@@ -241,6 +248,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
     public void handle(ActionEvent event) {
 
         if (event.getSource() == btnAdd) {
+            //Add value to DetailImporttb
             int id = Integer.parseInt(tbProductID.getText());
             String name = tbProductName.getText();
             float importprice = Float.parseFloat(tbImportPrice.getText());
@@ -251,6 +259,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             boolean isFound = false;
             for (DetailImport DT : detailimports) {
                 if (DT.getProduct_id() == id) {
+                    //Check if DetailExporttb's already had that product or not
                     int temp = DT.getQuantities();
                     DT.setQuantities(quan + temp);
                     float temp2 = DT.getTotal();
@@ -279,6 +288,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             btnDelete.setDisable(true);
             ClearData();
         } else if (event.getSource() == btnEdit) {
+            //Get value from texts
             int id = Integer.parseInt(tbProductID.getText());
             int quan = Integer.parseInt(tbQuantities.getText());
             float price = Float.parseFloat(tbPrice.getText());
@@ -310,6 +320,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             btnCreate.setDisable(true);
 
         } else if (event.getSource() == btnDelete) {
+            //Delete a value in DetailExporttb
             int id = Integer.parseInt(tbProductID.getText());
             float temp = 0;
             int index = 0;
@@ -331,11 +342,13 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             }
             ClearData();
         } else if (event.getSource() == btnCreate) {
+            //Create a Import form
             if ("".equals(cbSupplier.getSelectionModel().getSelectedItem())) {
                 Notifications.create().title("ERROR").text("You must select supplier!!!")
                         .showError();
             } else {
                 UserHolder holder = UserHolder.getInstance();
+                //Get the employee's ID through UserHolder
                 User u = holder.getUser();
                 int Id = u.getiID();
                 int supId = 1;
@@ -354,7 +367,10 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
                         int ID = Integer.parseInt(id);
                         boolean flag = true;
                         for (DetailImport DT : detailimports) {
-                            flag = DetailImportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                            //Insert Data to DetailImportForm
+                            DetailImportDAOImplement.getInstance().InsertToDatabase(DT, ID);
+                            //Plus quantitties in Product's quantitites
+                            flag = ProductDAOImplement.getInstance().UpdateQuantities(DT.getProduct_id(), DT.getQuantities());
                         }
                         System.out.print(flag ? "success" : "fail");
                         if (flag) {
