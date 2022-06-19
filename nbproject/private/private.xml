@@ -2,22 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group/>
-=======
-        <group>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/DAO/ProductDAO.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/ReportController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/DAO/Implement/DetailExportDAOImplement.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/ExportController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/ImportController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/MainMenuController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/DAO/Implement/ProductDAOImplement.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Model/DetailImport.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/ProductController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/Controller/LoginController.java</file>
-            <file>file:/D:/java/Git%20for%20doan/CosmeticGreenBeauty-javaFX/src/DAO/Implement/ImportDAOImplement.java</file>
-        </group>
->>>>>>> main
     </open-files>
 </project-private>

@@ -12,11 +12,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -50,10 +53,10 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
     private JFXButton btnAdd;
     @FXML
     private JFXButton btnEdit;
-
     @FXML
     private JFXButton btnDelete;
-
+    @FXML
+    private JFXTextField tbSearch;
     @FXML
     private TableView<Employee> Employeetb;
     @FXML
@@ -103,6 +106,42 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
                         btnEdit.setDisable(false);
                     }
                 });
+
+        tbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!"".equals(newValue)) {
+                ObservableList<Employee> employees = FXCollections.observableArrayList();
+                try {
+                    employees = EmployeeDAOImplement.getInstance().searchEmployee(newValue);
+                    Employeetb.setItems(employees);
+                    Employeetb.refresh();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    FillData();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        //Check wheather tbPhone contains value different with numbers or not (using RE)
+        tbPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
+                tbPhone.setText(oldValue);
+                Notifications.create().title("ERROR").text("Phone number must be number")
+                        .showError();
+            }
+        });
+
+        tbCitizenID.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
+                tbCitizenID.setText(oldValue);
+                Notifications.create().title("ERROR").text("CitizenID must be number")
+                        .showError();
+            }
+        });
     }
 
     private void FillData() throws ClassNotFoundException {
@@ -113,7 +152,9 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == btnAdd) {
-            if (!"".equals(tbName.getText()) && !"".equals(tbCitizenID.getText()) && !"".equals(tbAddress.getText()) && !"".equals(tbPhone.getText()) && !"".equals(tbEmail.getText()) && !"".equals(tbPosition.getText())) {
+            if (!"".equals(tbName.getText()) && !"".equals(tbCitizenID.getText())
+                    && !"".equals(tbAddress.getText()) && !"".equals(tbPhone.getText())
+                    && !"".equals(tbEmail.getText()) && !"".equals(tbPosition.getText())) {
                 String name = tbName.getText();
                 String citizenId = tbCitizenID.getText();
                 String address = tbAddress.getText();
@@ -140,55 +181,102 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else if ("".equals(tbName.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the name of employee.")
+                        .showWarning();
+            } else if ("".equals(tbCitizenID.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the citizenID of employee.")
+                        .showWarning();
+            } else if ("".equals(tbAddress.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the address of employee.")
+                        .showWarning();
+            } else if ("".equals(tbPhone.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the phone number of employee.")
+                        .showWarning();
+            } else if ("".equals(tbEmail.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the email of employee.")
+                        .showWarning();
+            } else if ("".equals(tbPosition.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the position of employee.")
+                        .showWarning();
             }
         } else if (event.getSource() == btnDelete) {
-            String id = tbID.getText();
-            int iID = Integer.parseInt(id);
-            try {
-                if (EmployeeDAOImplement.getInstance().deleteEmployee(iID) == 1) {
-                    ClearData();
-                    FillData();
-                    Employeetb.refresh();
-                    Notifications.create().title("Success").text("Delete Employee sucessfully!!")
-                            .showInformation();
-                    btnAdd.setDisable(true);
-                    btnDelete.setDisable(true);
-                    btnEdit.setDisable(true);
-                } else {
-                    Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
-                            .showError();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setContentText("Are you sure you want to delete this employee?");
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                String id = tbID.getText();
+                int iID = Integer.parseInt(id);
+                try {
+                    if (EmployeeDAOImplement.getInstance().deleteEmployee(iID) == 1) {
+                        ClearData();
+                        FillData();
+                        Employeetb.refresh();
+                        Notifications.create().title("Success").text("Delete Employee sucessfully!!")
+                                .showInformation();
+                        btnAdd.setDisable(true);
+                        btnDelete.setDisable(true);
+                        btnEdit.setDisable(true);
+                    } else {
+                        Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
+                                .showError();
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (event.getSource() == btnEdit) {
-            String id = tbID.getText();
-            int iID = Integer.parseInt(id);
-            String name = tbName.getText();
-            String citizenId = tbCitizenID.getText();
-            String address = tbAddress.getText();
-            String phoneNum = tbPhone.getText();
-            String email = tbEmail.getText();
-            String position = tbPosition.getText();
-            String username = "hihihi";
-            String password = "hehehe";
-            Employee employee = new Employee(iID, name, citizenId, address, email, phoneNum, position, username, password);
-            try {
-                if (EmployeeDAOImplement.getInstance().updateEmployee(employee) == 1) {
-                    ClearData();
-                    FillData();
-                    Employeetb.refresh();
-                    Notifications.create().title("Success").text("Edit employee sucessfully!!")
-                            .showInformation();
-                    btnAdd.setDisable(true);
-                    btnDelete.setDisable(true);
-                    btnEdit.setDisable(true);
-                } else {
-                    Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
-                            .showError();
+            if (!"".equals(tbName.getText()) && !"".equals(tbCitizenID.getText())
+                    && !"".equals(tbAddress.getText()) && !"".equals(tbPhone.getText())
+                    && !"".equals(tbEmail.getText()) && !"".equals(tbPosition.getText())) {
+                String id = tbID.getText();
+                int iID = Integer.parseInt(id);
+                String name = tbName.getText();
+                String citizenId = tbCitizenID.getText();
+                String address = tbAddress.getText();
+                String phoneNum = tbPhone.getText();
+                String email = tbEmail.getText();
+                String position = tbPosition.getText();
+                String username = "hihihi";
+                String password = "hehehe";
+               
+                Employee employee = new Employee(iID, name, citizenId, address, email, phoneNum, position, username, password);
+                try {
+                    if (EmployeeDAOImplement.getInstance().updateEmployee(employee) == 1) {
+                        ClearData();
+                        FillData();
+                        Employeetb.refresh();
+                        Notifications.create().title("Success").text("Edit employee sucessfully!!")
+                                .showInformation();
+                        btnAdd.setDisable(true);
+                        btnDelete.setDisable(true);
+                        btnEdit.setDisable(true);
+                    } else {
+                        Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
+                                .showError();
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+
+            } else if ("".equals(tbName.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the name of employee.")
+                        .showWarning();
+            } else if ("".equals(tbCitizenID.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the citizenID of employee.")
+                        .showWarning();
+            } else if ("".equals(tbAddress.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the address of employee.")
+                        .showWarning();
+            } else if ("".equals(tbPhone.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the phone number of employee.")
+                        .showWarning();
+            } else if ("".equals(tbEmail.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the email of employee.")
+                        .showWarning();
+            } else if ("".equals(tbPosition.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the position of employee.")
+                        .showWarning();
             }
         }
     }

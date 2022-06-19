@@ -115,7 +115,7 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
                     if (newValue != null) {
                         temp_detailBill = newValue;
                         btnDelete.setDisable(false);
-
+                        btnAdd.setDisable(true);
                     }
                 });
 
@@ -135,6 +135,15 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(SaleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        });
+
+        //Check wheather tbPhone contains value different with numbers or not (using RE)
+        tbPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
+                tbPhone.setText(oldValue);
+                Notifications.create().title("ERROR").text("Phone number must be number")
+                        .showError();
             }
         });
     }
@@ -246,6 +255,14 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(SaleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else if ("".equals(tbName.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the name of customer.")
+                        .showWarning();
+
+            } else if ("".equals(tbPhone.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the phone number of customer.")
+                        .showWarning();
+
             }
         }
 
