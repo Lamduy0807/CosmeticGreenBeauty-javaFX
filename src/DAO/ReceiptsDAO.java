@@ -4,14 +4,15 @@
  */
 package DAO;
 
-import Model.Bill;
+import Model.Receipts;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author DELL
  */
-public interface BillDAO {
-    String createBill( Bill bill);
-    
+public interface ReceiptsDAO {
+    ObservableList<Receipts> getAllReceipts();
+    int addReceipts(Receipts receipt);
     
 }

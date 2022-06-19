@@ -27,8 +27,8 @@ public class DbConnection {
     }
 
     public static Connection getConnect() throws ClassNotFoundException {
-        Connection conn = getConnection("DESKTOP-1I3F1F7\\SQLEXPRESS", "ComesticDB");
-        //Connection conn = getConnection("DESKTOP-6NG98G3\\SQLEXPRESS", "ComesticDB");
+        //Connection conn = getConnection("DESKTOP-1I3F1F7\\SQLEXPRESS", "ComesticDB");
+        Connection conn = getConnection("DESKTOP-6NG98G3\\SQLEXPRESS", "ComesticDB");
         return conn;
     }
 }

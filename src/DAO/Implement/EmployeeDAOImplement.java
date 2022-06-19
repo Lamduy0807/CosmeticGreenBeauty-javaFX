@@ -154,4 +154,24 @@ public class EmployeeDAOImplement implements EmployeeDAO {
         return result;
     }
 
+    @Override
+    public ObservableList<Employee> searchEmployee(String search) {
+       String query = "SELECT Employee_id, EmployName, Citizen_id, Address, PhoneNumber, Email, Position, Username, Password FROM Employee WHERE (Employee_id like '" + search + "%' or EmployName like N'" + search + "%')";
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Employee employee = setDataIntoResultSet(resultSet);
+                employees.add(employee);
+            }
+            preparedStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAOImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employees;
+    }
+
 }

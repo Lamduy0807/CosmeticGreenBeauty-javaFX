@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
  */
 public interface EmployeeDAO {
     ObservableList<Employee> getAllUser();
+    ObservableList<Employee> searchEmployee(String search);
     Employee getById(int employee_id);
     int addEmployee(Employee employee);
     int updateEmployee(Employee employee);

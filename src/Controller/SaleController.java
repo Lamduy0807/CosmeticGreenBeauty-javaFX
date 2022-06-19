@@ -4,10 +4,14 @@
  */
 package Controller;
 
+import DAO.Implement.BillDAOImplement;
+import DAO.Implement.DetailBillDAOImplement;
 import DAO.Implement.ProductDAOImplement;
+import Holder.UserHolder;
+import Model.Bill;
 import Model.DetailBill;
-import Model.DetailImport;
 import Model.Product;
+import Model.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -23,6 +27,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import org.controlsfx.control.Notifications;
 
 /**
  *
@@ -54,19 +60,24 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
 
     @FXML
     private JFXButton btnAdd;
-    @FXML
-    private JFXButton btnEdit;
 
     @FXML
     private JFXButton btnDelete;
+    @FXML
+    private JFXButton btnCreateBill;
 
     @FXML
     private JFXTextField tbName;
     @FXML
     private JFXTextField tbPhone;
 
+    @FXML
+    private JFXTextField tbSearch;
+    @FXML
+    private Text txtTotal;
+
     Product temp_product = null;
-    DetailBill temp_detailBill=null;
+    DetailBill temp_detailBill = null;
 
     private ObservableList<DetailBill> detailBillData = FXCollections.observableArrayList();
 
@@ -86,6 +97,7 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
             FillData();
             btnAdd.setDisable(true);
             btnDelete.setDisable(true);
+            btnCreateBill.setDisable(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,11 +106,7 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         temp_product = newValue;
-                        //selectItem(newValue);
                         btnAdd.setDisable(false);
-
-                        //btnDelete.setDisable();
-                        // btnEdit.setDisable(false);
                     }
                 });
 
@@ -106,20 +114,57 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         temp_detailBill = newValue;
-                        
                         btnDelete.setDisable(false);
-
-                        
+                        btnAdd.setDisable(true);
                     }
                 });
+
+        tbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!"".equals(newValue)) {
+                ObservableList<Product> products = FXCollections.observableArrayList();
+                try {
+                    products = ProductDAOImplement.getInstance().searchProduct(newValue);
+                    Producttb.setItems(products);
+                    Producttb.refresh();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SaleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    FillData();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SaleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        //Check wheather tbPhone contains value different with numbers or not (using RE)
+        tbPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
+                tbPhone.setText(oldValue);
+                Notifications.create().title("ERROR").text("Phone number must be number")
+                        .showError();
+            }
+        });
     }
 
+    //Get all data of product table
     private void FillData() throws ClassNotFoundException {
         ObservableList<Product> products = ProductDAOImplement.getInstance().getListOfProduct();
         Producttb.setItems(products);
     }
 
-    
+    //Calculate total proce for all items added 
+    public void handelCalculateTotal() {
+        float total = 0;
+        for (DetailBill Db : detailBillData) {
+            total = total + Db.getPresentPrice() * Db.getQuantity();
+        }
+
+        txtTotal.setText(Float.toString(total));
+    }
+
+    //Clear data in textboxes, text and combobox
     public void ClearData() {
         tbName.setText("");
         tbPhone.setText("");
@@ -132,6 +177,8 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
             String name = temp_product.getProductName();
             int quantity = 1;
             float presentPrice = temp_product.getPrice();
+
+            float tem = 0;
 
             boolean isFound = false;
             for (DetailBill db : detailBillData) {
@@ -149,23 +196,76 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
             } else {
                 Carttb.refresh();
             }
+            handelCalculateTotal();
+            btnCreateBill.setDisable(false);
 
         } else if (event.getSource() == btnDelete) {
             int id = temp_detailBill.getProduct_id();
-           // float temp = 0;
             int index = 0;
             for (DetailBill db : detailBillData) {
                 if (db.getProduct_id() == id) {
-                    //temp = db.getTotal();
                     break;
                 }
                 index++;
             }
             detailBillData.remove(index);
             Carttb.refresh();
-            
+
+        } else if (event.getSource() == btnCreateBill) {
+            if (!"".equals(tbName.getText()) && !"".equals(tbPhone.getText())) {
+
+                UserHolder holder = UserHolder.getInstance();
+                User u = holder.getUser();
+                int Id = u.getiID();
+
+                float total = Float.parseFloat(txtTotal.getText());
+                String customerName = tbName.getText();
+                String phoneNum = tbPhone.getText();
+
+                Bill bill = new Bill(Id, customerName, phoneNum, total);
+                try {
+                    String id = BillDAOImplement.getInstance().createBill(bill);
+                    if (!"".equals(id)) {
+                        int ID = Integer.parseInt(id);
+                        boolean flag = true;
+                        for (DetailBill Db : detailBillData) {
+                            flag = DetailBillDAOImplement.getInstance().addDetailBill(Db, ID);
+                        }
+                        System.out.print(flag ? "success" : "fail");
+                        if (flag) {
+                            Notifications.create().title("Information").text("Create successfully!!")
+                                    .showInformation();
+                            ClearData();
+                            txtTotal.setText(Float.toString(0));
+
+                            detailBillData.clear();
+                            Carttb.refresh();
+                            btnAdd.setDisable(true);
+                            btnDelete.setDisable(true);
+
+                            btnCreateBill.setDisable(true);
+                        } else {
+                            Notifications.create().title("ERROR").text("There were some errors. Please check again!!")
+                                    .showError();
+                        }
+                    } else {
+                        Notifications.create().title("ERROR").text("There were some errors. Please check again!!")
+                                .showError();
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SaleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if ("".equals(tbName.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the name of customer.")
+                        .showWarning();
+
+            } else if ("".equals(tbPhone.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the phone number of customer.")
+                        .showWarning();
+
+            }
         }
-       
+
     }
 
 }

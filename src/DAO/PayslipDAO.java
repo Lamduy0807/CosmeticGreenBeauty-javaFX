@@ -4,14 +4,15 @@
  */
 package DAO;
 
-import Model.Bill;
+import Model.Payslip;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author DELL
  */
-public interface BillDAO {
-    String createBill( Bill bill);
-    
+public interface PayslipDAO {
+     ObservableList<Payslip> getAllPayslip();
+    int addPayslip(Payslip payslip);
     
 }

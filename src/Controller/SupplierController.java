@@ -17,16 +17,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.Notifications;
+
 /**
  *
- * @author Duy
- * this file is responsible as a controller for supplier.fxml in folder View
+ * @author Duy this file is responsible as a controller for supplier.fxml in
+ * folder View
  */
-public class SupplierController implements Initializable, EventHandler<ActionEvent>{
+public class SupplierController implements Initializable, EventHandler<ActionEvent> {
+
     @FXML
     private JFXTextField tbID;
 
@@ -68,14 +72,13 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
 
     @FXML
     private TableColumn<Supplier, String> pPhoneCol;
-    
+
     //handle event for each button
     @Override
     public void handle(ActionEvent event) {
-        if(event.getSource()== btnAdd)
-        {
-            if(!"".equals(tbName.getText()) && !"".equals(tbEmail.getText()) && !"".equals(tbAddress.getText()) && !"".equals(tbPhone.getText()))
-            {
+        if (event.getSource() == btnAdd) {
+            if (!"".equals(tbName.getText()) && !"".equals(tbEmail.getText())
+                    && !"".equals(tbAddress.getText()) && !"".equals(tbPhone.getText())) {
                 String email = tbEmail.getText();
                 String name = tbName.getText();
                 String add = tbAddress.getText();
@@ -84,55 +87,62 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
                 Supplier suplier = new Supplier(name, email, phone, add);
                 try {
                     //Successfully add a new supplier
-                    if(SupplierDAOImplement.getInstance().AddSupplier(suplier))
-                    {
+                    if (SupplierDAOImplement.getInstance().AddSupplier(suplier)) {
                         ClearData();
                         FillData();
                         Suppliertb.refresh();
                         Notifications.create().title("Success").text("Add new supplier sucessfully!!")
-                  .showInformation();
+                                .showInformation();
                         btnAdd.setDisable(true);
                         btnDelete.setDisable(true);
                         btnEdit.setDisable(true);
-                    }
-                    else
-                    {
+                    } else {
                         Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
-                  .showError();
+                                .showError();
                     }
-                        } catch (ClassNotFoundException ex) {
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else if ("".equals(tbName.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the name of supplier.")
+                        .showWarning();
+            } else if ("".equals(tbEmail.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the email of supplier.")
+                        .showWarning();
+            } else if ("".equals(tbAddress.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the address of supplier.")
+                        .showWarning();
+            } else if ("".equals(tbPhone.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the phone number of supplier.")
+                        .showWarning();
             }
-        }
-        else if(event.getSource()== btnDelete)
-        {
+        } else if (event.getSource() == btnDelete) {
             //Delete a supplier
-            String id = tbID.getText();
-            int iID = Integer.parseInt(id);
-            try {
-                if(SupplierDAOImplement.getInstance().DeleteSupplier(iID))
-                {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setContentText("Are you sure you want to delete this supplier?");
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                String id = tbID.getText();
+                int iID = Integer.parseInt(id);
+                try {
+                    if (SupplierDAOImplement.getInstance().DeleteSupplier(iID)) {
                         ClearData();
                         FillData();
                         Suppliertb.refresh();
                         Notifications.create().title("Success").text("Delete supplier sucessfully!!")
-                  .showInformation();
+                                .showInformation();
                         btnAdd.setDisable(true);
                         btnDelete.setDisable(true);
                         btnEdit.setDisable(true);
+                    } else {
+                        Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
+                                .showError();
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                else
-                {
-                    Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
-                  .showError();
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if(event.getSource()== btnEdit)
-        {
+        } else if (event.getSource() == btnEdit) {
             //Edit a supplier information
             String id = tbID.getText();
             int iID = Integer.parseInt(id);
@@ -142,34 +152,32 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
             String phone = tbPhone.getText();
             Supplier suplier = new Supplier(iID, name, email, phone, add);
             try {
-                if(SupplierDAOImplement.getInstance().EditSupplier(suplier))
-                {
-                        ClearData();
-                        FillData();
-                        Suppliertb.refresh();
-                        Notifications.create().title("Success").text("Edit supplier sucessfully!!")
-                  .showInformation();
-                        btnAdd.setDisable(true);
-                        btnDelete.setDisable(true);
-                        btnEdit.setDisable(true);
-                }
-                else
-                {
+                if (SupplierDAOImplement.getInstance().EditSupplier(suplier)) {
+                    ClearData();
+                    FillData();
+                    Suppliertb.refresh();
+                    Notifications.create().title("Success").text("Edit supplier sucessfully!!")
+                            .showInformation();
+                    btnAdd.setDisable(true);
+                    btnDelete.setDisable(true);
+                    btnEdit.setDisable(true);
+                } else {
                     Notifications.create().title("ERROR").text("There is some errors occurred! Please check again")
-                  .showError();
+                            .showError();
                 }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
+
     }
+
     //fill data in to supplier table
-    private void FillData() throws ClassNotFoundException{
+    private void FillData() throws ClassNotFoundException {
         ObservableList<Supplier> suppliers = SupplierDAOImplement.getInstance().getListOfSuplier();
         Suppliertb.setItems(suppliers);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set value for column in Suppliertb
@@ -186,28 +194,38 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
         }
         //Handel when click on a row in Suppliertb
         Suppliertb.getSelectionModel().selectedItemProperty().addListener(
-        (observable, oldValue, newValue) -> {
-            if(newValue != null)
-        {
-          selectItem(newValue);
-          btnAdd.setDisable(true);
-          btnDelete.setDisable(false);
-          btnEdit.setDisable(false);
-        }
+                (observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        selectItem(newValue);
+                        btnAdd.setDisable(true);
+                        btnDelete.setDisable(false);
+                        btnEdit.setDisable(false);
+                    }
+                });
+
+        //Check wheather tbPhone contains value different with numbers or not (using RE)
+        tbPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^[0-9]+$") && !"".equals(newValue)) {
+                tbPhone.setText(oldValue);
+                Notifications.create().title("ERROR").text("Phone number must be number")
+                        .showError();
+            }
         });
-        
+
     }
+
     //handle event when click into a row in suplier table
     private void selectItem(Supplier supplier) {
-        
-            tbID.setText(String.valueOf(supplier.getSuplier_Id()));
-            tbName.setText(supplier.getSuplierName());
-            tbEmail.setText(supplier.getEmail());
-            tbAddress.setText(supplier.getAddress());
-            tbPhone.setText(supplier.getPhoneNumber());
+
+        tbID.setText(String.valueOf(supplier.getSuplier_Id()));
+        tbName.setText(supplier.getSuplierName());
+        tbEmail.setText(supplier.getEmail());
+        tbAddress.setText(supplier.getAddress());
+        tbPhone.setText(supplier.getPhoneNumber());
     }
+
     //handle for clear data in textfield
-    public void ClearData(){
+    public void ClearData() {
         tbID.setText("");
         tbName.setText("");
         tbEmail.setText("");

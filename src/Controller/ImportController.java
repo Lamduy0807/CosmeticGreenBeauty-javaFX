@@ -36,8 +36,7 @@ import org.controlsfx.control.Notifications;
 
 /**
  *
- * @author Duy
- * this file is a controller for Import.fxml
+ * @author Duy this file is a controller for Import.fxml
  */
 public class ImportController implements Initializable, EventHandler<ActionEvent> {
 
@@ -119,7 +118,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         pDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
         pOriginalCol.setCellValueFactory(new PropertyValueFactory<>("Original"));
         pTypeCol.setCellValueFactory(new PropertyValueFactory<>("ProductType"));
-        
+
         //Set title for Detail Table
         dpProIdCol.setCellValueFactory(new PropertyValueFactory<>("Product_id"));
         dpProNameCol.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
@@ -189,12 +188,14 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         btnCancel.setDisable(true);
         btnCreate.setDisable(true);
     }
+
     //handle select a row in product table
     private void selectItem(Product product) {
         tbProductID.setText(String.valueOf(product.getProduct_id()));
         tbProductName.setText(product.getProductName());
         tbImportPrice.setText(String.valueOf(product.getPrice()));
     }
+
     //handle select a row in detailt table
     private void selectItemImported(DetailImport DT) {
         if (!detailimports.isEmpty()) {
@@ -205,11 +206,13 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(String.valueOf(DT.getTotal()));
         }
     }
+
     //Fill data from datbase into Product table
     private void FillData() throws ClassNotFoundException {
         ObservableList<Product> products = ProductDAOImplement.getInstance().getListOfProduct();
         Producttb.setItems(products);
     }
+
     //fill data form database into combobox
     private void FillDataCombobox() throws ClassNotFoundException {
         ObservableList<Supplier> suppliers = SupplierDAOImplement.getInstance().getListOfSuplier();
@@ -217,6 +220,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             cbSupplier.getItems().add(sup.getSuplierName());
         }
     }
+
     //calculate price when textbox quantities changed
     public void handleCalculatePrice() {
         if (!"".equals(tbQuantities.getText()) && !"".equals(tbImportPrice.getText())) {
@@ -226,6 +230,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
             tbPrice.setText(Float.toString(result));
         }
     }
+
     //Calculate total proce for all items added 
     public void handelCalculateTotal() {
         float total = 0;
@@ -235,6 +240,7 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
 
         txtTotal.setText(Float.toString(total));
     }
+
     //Clear data in textboxes, text and combobox
     public void ClearData() {
         tbProductID.setText("");
@@ -243,50 +249,57 @@ public class ImportController implements Initializable, EventHandler<ActionEvent
         tbQuantities.setText("");
         tbPrice.setText("");
     }
+
     // handle event for each button
     @Override
     public void handle(ActionEvent event) {
 
         if (event.getSource() == btnAdd) {
-            //Add value to DetailImporttb
-            int id = Integer.parseInt(tbProductID.getText());
-            String name = tbProductName.getText();
-            float importprice = Float.parseFloat(tbImportPrice.getText());
-            int quan = Integer.parseInt(tbQuantities.getText());
-            float price = Float.parseFloat(tbPrice.getText());
-            float tem = 0;
+            if (!"".equals(tbQuantities.getText())) {
 
-            boolean isFound = false;
-            for (DetailImport DT : detailimports) {
-                if (DT.getProduct_id() == id) {
-                    //Check if DetailExporttb's already had that product or not
-                    int temp = DT.getQuantities();
-                    DT.setQuantities(quan + temp);
-                    float temp2 = DT.getTotal();
-                    tem = temp2;
-                    DT.setTotal(price + temp2);
+                //Add value to DetailImporttb
+                int id = Integer.parseInt(tbProductID.getText());
+                String name = tbProductName.getText();
+                float importprice = Float.parseFloat(tbImportPrice.getText());
+                int quan = Integer.parseInt(tbQuantities.getText());
+                float price = Float.parseFloat(tbPrice.getText());
+                float tem = 0;
 
-                    isFound = true;
+                boolean isFound = false;
+                for (DetailImport DT : detailimports) {
+                    if (DT.getProduct_id() == id) {
+                        //Check if DetailExporttb's already had that product or not
+                        int temp = DT.getQuantities();
+                        DT.setQuantities(quan + temp);
+                        float temp2 = DT.getTotal();
+                        tem = temp2;
+                        DT.setTotal(price + temp2);
+
+                        isFound = true;
+                    }
                 }
-            }
 
-            if (!isFound) {
-                DetailImport di = new DetailImport(id, name, 0, importprice, quan, price);
-                detailimports.add(di);
-                DetailImporttb.setItems(detailimports);
-            } else {
-                DetailImporttb.refresh();
-            }
-            handelCalculateTotal();
+                if (!isFound) {
+                    DetailImport di = new DetailImport(id, name, 0, importprice, quan, price);
+                    detailimports.add(di);
+                    DetailImporttb.setItems(detailimports);
+                } else {
+                    DetailImporttb.refresh();
+                }
+                handelCalculateTotal();
 
-            float total = Float.parseFloat(txtTotal.getText());
-            txtTotal.setText(Float.toString(total + tem));
-            btnCreate.setDisable(false);
-            btnCancel.setDisable(false);
-            btnAdd.setDisable(true);
-            btnEdit.setDisable(true);
-            btnDelete.setDisable(true);
-            ClearData();
+                float total = Float.parseFloat(txtTotal.getText());
+                txtTotal.setText(Float.toString(total + tem));
+                btnCreate.setDisable(false);
+                btnCancel.setDisable(false);
+                btnAdd.setDisable(true);
+                btnEdit.setDisable(true);
+                btnDelete.setDisable(true);
+                ClearData();
+            } else if ("".equals(tbQuantities.getText())) {
+                Notifications.create().title("WARNING").text("Please enter the quantity of product.")
+                        .showWarning();
+            }
         } else if (event.getSource() == btnEdit) {
             //Get value from texts
             int id = Integer.parseInt(tbProductID.getText());

@@ -8,13 +8,11 @@ import Holder.UserHolder;
 import Model.User;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,10 +30,10 @@ import javafx.util.Duration;
 
 /**
  *
- * @author Duy
- * This file is a controller for MainMenu.fxml 
+ * @author Duy This file is a controller for MainMenu.fxml
  */
-public class MainMenuController implements Initializable{
+public class MainMenuController implements Initializable {
+
     public AnchorPane Context;
     public HBox buttonHome;
     public HBox buttonSale;
@@ -58,17 +56,19 @@ public class MainMenuController implements Initializable{
 
     @FXML
     private ImageView btnMinimize;
+
     //Set UI for Panel when we click on specific button
     private void setUi(String location) throws IOException {
         Context.getChildren().clear();
         Context.getChildren().add(FXMLLoader.load(this.getClass().
                 getResource("/View/" + location + ".fxml")));
     }
+
     // Click on Home button
     public void DashBoardOnAction() throws IOException {
         setUi("Home");
         buttonHome.getStyleClass().add("active");
-        
+
         buttonSale.getStyleClass().remove("active");
         buttonProduct.getStyleClass().remove("active");
         buttonEmployee.getStyleClass().remove("active");
@@ -77,21 +77,18 @@ public class MainMenuController implements Initializable{
         buttonExport.getStyleClass().remove("active");
         buttonAccountant.getStyleClass().remove("active");
         buttonReport.getStyleClass().remove("active");
-        
-        
-        new FadeTransition(Duration.millis(3000),Context).play();
-        
+
+        new FadeTransition(Duration.millis(3000), Context).play();
 
     }
 
     //Handle click event for each button
-    public void btnClick(String name) throws IOException{
-        switch(name)
-        {
-            case "Home":{
+    public void btnClick(String name) throws IOException {
+        switch (name) {
+            case "Home": {
                 setUi("Home");
                 buttonHome.getStyleClass().add("active");
-                
+
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
                 buttonEmployee.getStyleClass().remove("active");
@@ -104,10 +101,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Home");
                 break;
             }
-            case "Sale":{
+            case "Sale": {
                 setUi("Sale");
                 buttonSale.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
                 buttonEmployee.getStyleClass().remove("active");
@@ -120,10 +117,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Sale");
                 break;
             }
-            case "Product":{
+            case "Product": {
                 setUi("Product");
                 buttonProduct.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonEmployee.getStyleClass().remove("active");
@@ -136,10 +133,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Product");
                 break;
             }
-            case "Employee":{
+            case "Employee": {
                 setUi("Employee");
                 buttonEmployee.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -152,10 +149,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Employee");
                 break;
             }
-            case "Suplier":{
+            case "Suplier": {
                 setUi("Suplier");
                 buttonSuplier.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -168,12 +165,11 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Supplier");
                 break;
             }
-            
-            case "Import":
-            {
+
+            case "Import": {
                 setUi("Import");
                 buttonImport.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -186,10 +182,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Import");
                 break;
             }
-            case "Export":{
+            case "Export": {
                 setUi("Export");
                 buttonExport.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -202,10 +198,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Export");
                 break;
             }
-            case "Accountant":{
+            case "Accountant": {
                 setUi("Accountant");
                 buttonAccountant.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -218,10 +214,10 @@ public class MainMenuController implements Initializable{
                 txtView.setText("Accountant");
                 break;
             }
-            case "Report":{
+            case "Report": {
                 setUi("Report");
                 buttonReport.getStyleClass().add("active");
-                
+
                 buttonHome.getStyleClass().remove("active");
                 buttonSale.getStyleClass().remove("active");
                 buttonProduct.getStyleClass().remove("active");
@@ -238,32 +234,27 @@ public class MainMenuController implements Initializable{
                 break;
         }
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        btnClose.setOnMouseClicked(e->handleClose());
-        btnMinimize.setOnMouseClicked(e->handleMinimize());
+        btnClose.setOnMouseClicked(e -> handleClose());
+        btnMinimize.setOnMouseClicked(e -> handleMinimize());
         buttonHome.setDisable(false);
         UserHolder holder = UserHolder.getInstance();
         User u = holder.getUser();
         //Authentication for specific user
-        if("SalesMan".equals(u.getsPosition()))
-        {
-            
+        if ("SalesMan".equals(u.getsPosition())) {
+
             buttonSale.setDisable(false);
             buttonReport.setDisable(false);
-        }
-        else if("InventoryDepartment".equals(u.getsPosition()))
-        {
+        } else if ("InventoryDepartment".equals(u.getsPosition())) {
             buttonImport.setDisable(false);
             buttonExport.setDisable(false);
             buttonProduct.setDisable(false);
-        }
-        else if("AccountingDepartment".equals(u.getsPosition()))
-        {
+        } else if ("AccountingDepartment".equals(u.getsPosition())) {
             buttonAccountant.setDisable(false);
             buttonReport.setDisable(false);
-        }
-        else{
+        } else {
             buttonSale.setDisable(false);
             buttonImport.setDisable(false);
             buttonExport.setDisable(false);
@@ -276,7 +267,7 @@ public class MainMenuController implements Initializable{
         try {
             DashBoardOnAction();
 
-            buttonImport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonImport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -285,9 +276,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonHome.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonHome.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -296,9 +287,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonSale.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonSale.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -307,9 +298,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonProduct.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonProduct.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -318,9 +309,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonEmployee.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonEmployee.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -329,9 +320,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonSuplier.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonSuplier.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -340,9 +331,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonExport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonExport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -351,9 +342,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonAccountant.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonAccountant.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -362,9 +353,9 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonReport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonReport.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     try {
@@ -373,34 +364,35 @@ public class MainMenuController implements Initializable{
                         Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
             });
-            buttonLogout.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+            buttonLogout.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
                     handleClose();
                 }
-                
+
             });
-            new FadeTransition(Duration.millis(3000),Context).play();
-            
+            new FadeTransition(Duration.millis(3000), Context).play();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     //handle for Close Program event
-    public void handleClose(){
-       Alert alert = new Alert(AlertType.CONFIRMATION);
-       alert.setTitle("Exit");
-       alert.setContentText("Do you want to logout?");
-       if(alert.showAndWait().get()==ButtonType.OK)
-       {
-           Platform.exit();
-       }
+    public void handleClose() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setContentText("Do you want to logout?");
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
+
     //handle for minimiz event
-    public void handleMinimize(){
-       Stage stage = (Stage) btnMinimize.getScene().getWindow();
-       stage.setIconified(true);
+    public void handleMinimize() {
+        Stage stage = (Stage) btnMinimize.getScene().getWindow();
+        stage.setIconified(true);
     }
 }

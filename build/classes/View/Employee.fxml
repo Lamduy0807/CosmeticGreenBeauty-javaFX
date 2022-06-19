@@ -4,18 +4,17 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmployeeController">
     <children>
-        <Text layoutX="29.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All of the employee" />
-        <TextField layoutX="149.0" layoutY="14.0" prefHeight="40.0" prefWidth="628.0" promptText="Search employee by ID, name" />
-        <TableView fx:id="Employeetb" layoutY="300.0" prefHeight="320.0" prefWidth="1028.0" stylesheets="@../css/fullpackstyling.css">
+        
+        <!--        <TextField layoutX="149.0" layoutY="14.0" prefHeight="40.0" prefWidth="628.0" promptText="Search employee by ID, name" />-->
+        <JFXTextField fx:id="tbSearch" focusColor="#2d922d" labelFloat="true" layoutX="33.0" layoutY="14.0" prefHeight="26.0" prefWidth="286.0" promptText="Search employee by ID, name" />
+        <TableView fx:id="Employeetb" layoutX="29.0" layoutY="300.0" prefHeight="320.0" prefWidth="966.0" stylesheets="@../css/fullpackstyling.css">
             <columns>
                 <TableColumn fx:id="idCol" prefWidth="60" text="ID" />
                 <TableColumn fx:id="nameCol" prefWidth="120" text="Name" />
@@ -28,7 +27,7 @@
                 <TableColumn fx:id="passwordCol" prefWidth="136.7999267578125" text="Password" />
             </columns>
         </TableView>
-        <JFXButton fx:id="btnAdd" buttonType="RAISED" graphicTextGap="28.0" layoutX="849.0" layoutY="14.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Add" textFill="#189f0b">
+        <JFXButton fx:id="btnAdd" buttonType="RAISED" graphicTextGap="28.0" layoutX="848.0" layoutY="40.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Add" textFill="#189f0b">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -40,7 +39,7 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="btnEdit" buttonType="RAISED" graphicTextGap="28.0" layoutX="849.0" layoutY="90.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Edit" textFill="#ff8066">
+        <JFXButton fx:id="btnEdit" buttonType="RAISED" graphicTextGap="28.0" layoutX="848.0" layoutY="116.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Edit" textFill="#ff8066">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -52,7 +51,7 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="btnDelete" buttonType="RAISED" graphicTextGap="28.0" layoutX="849.0" layoutY="166.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Delete" textFill="RED">
+        <JFXButton fx:id="btnDelete" buttonType="RAISED" graphicTextGap="28.0" layoutX="848.0" layoutY="193.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Delete" textFill="RED">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -71,20 +70,8 @@
         <JFXTextField fx:id="tbPhone" focusColor="#2d922d" labelFloat="true" layoutX="29.0" layoutY="245.0" prefHeight="25.0" prefWidth="324.0" promptText="Phone Number" />
         <JFXTextField fx:id="tbEmail" focusColor="#2d922d" labelFloat="true" layoutX="453.0" layoutY="65.0" prefHeight="25.0" prefWidth="324.0" promptText="Email" />
         <JFXTextField fx:id="tbPosition" focusColor="#2d922d" labelFloat="true" layoutX="453.0" layoutY="110.0" prefHeight="25.0" prefWidth="324.0" promptText="Position" />
-        <JFXTextField fx:id="tbUsername" focusColor="#2d922d" labelFloat="true" layoutX="453.0" layoutY="155.0" prefHeight="25.0" prefWidth="324.0" promptText="Username" />
+        <JFXTextField fx:id="tbUsername" editable="false" focusColor="#2d922d" labelFloat="true" layoutX="453.0" layoutY="155.0" prefHeight="25.0" prefWidth="324.0" promptText="Username" />
         <JFXTextField fx:id="tbPassword" focusColor="#2d922d" labelFloat="true" layoutX="453.0" layoutY="200.0" prefHeight="25.0" prefWidth="324.0" promptText="Password" />
-      <JFXButton fx:id="btnDelete1" buttonType="RAISED" graphicTextGap="28.0" layoutX="848.0" layoutY="242.0" onAction="#handle" prefHeight="32.0" prefWidth="146.0" style="-fx-border-color: #000;" text="Delete" textFill="RED">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/delete%20(2).png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </JFXButton>
-      
+
     </children>
 </AnchorPane>
