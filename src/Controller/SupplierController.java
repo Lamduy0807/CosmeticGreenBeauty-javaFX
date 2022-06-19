@@ -80,8 +80,10 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
                 String name = tbName.getText();
                 String add = tbAddress.getText();
                 String phone = tbPhone.getText();
+                //Get datafrom textboxes and convert into a Model
                 Supplier suplier = new Supplier(name, email, phone, add);
                 try {
+                    //Successfully add a new supplier
                     if(SupplierDAOImplement.getInstance().AddSupplier(suplier))
                     {
                         ClearData();
@@ -105,6 +107,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
         }
         else if(event.getSource()== btnDelete)
         {
+            //Delete a supplier
             String id = tbID.getText();
             int iID = Integer.parseInt(id);
             try {
@@ -130,6 +133,7 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
         }
         else if(event.getSource()== btnEdit)
         {
+            //Edit a supplier information
             String id = tbID.getText();
             int iID = Integer.parseInt(id);
             String email = tbEmail.getText();
@@ -168,16 +172,19 @@ public class SupplierController implements Initializable, EventHandler<ActionEve
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Set value for column in Suppliertb
         pIdCol.setCellValueFactory(new PropertyValueFactory<>("Suplier_Id"));
         pNameCol.setCellValueFactory(new PropertyValueFactory<>("SuplierName"));
         pEmailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
         pAddressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
         pPhoneCol.setCellValueFactory(new PropertyValueFactory<>("PhoneNumber"));
         try {
+            //Fill supplier's data into Suppliertb
             FillData();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Handel when click on a row in Suppliertb
         Suppliertb.getSelectionModel().selectedItemProperty().addListener(
         (observable, oldValue, newValue) -> {
             if(newValue != null)

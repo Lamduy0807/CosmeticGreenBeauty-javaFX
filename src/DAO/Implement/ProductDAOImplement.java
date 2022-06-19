@@ -89,7 +89,23 @@ public class ProductDAOImplement implements ProductDAO {
 
     @Override
     public Product getById(int product_id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT Product_id, ProductName, Price, Description, Origin, Unit, Quantities, TypeName from Product , ProductType where Product_id= '"+product_id+"'";
+        //ObservableList<Product> products = FXCollections.observableArrayList();
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = setDataIntoResultSet(resultSet);
+                return product;
+            }
+            preparedStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAOImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -162,5 +178,22 @@ public class ProductDAOImplement implements ProductDAO {
             System.out.print("Error when inserting!!");
         }
         return result;
+    }
+
+    @Override
+    public boolean UpdateQuantities(int product_id, int quantities) {
+        String sql = "UPDATE Product SET Quantities = Quantities + ? WHERE Product_id = ?";
+        PreparedStatement preparedStatement;    
+        try {
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, quantities);
+        preparedStatement.setInt(2, product_id);
+
+        return preparedStatement.executeUpdate()> 0;
+        
+        } catch (SQLException e) {
+            System.out.print("Error when update!! ");
+        }
+        return true;
     }
 }
