@@ -4,12 +4,14 @@
  */
 package DAO;
 
+import Model.Bill;
+
 /**
  *
  * @author DELL
  */
 public interface BillDAO {
-    int createBill();
+    String createBill( Bill bill);
     
     
 }

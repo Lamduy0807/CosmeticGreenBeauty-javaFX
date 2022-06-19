@@ -9,7 +9,6 @@ import Db.DbConnection;
 import Model.DetailImport;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -34,8 +33,7 @@ public class DetailImportDAOImplement implements DetailImportDAO{
    }
    //Insert data into DetailImportForm in database
     @Override
-    public boolean InsertToDatabase(DetailImport detail, int id) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean InsertToDatabase(DetailImport detail, int id) {       
         String sql = "INSERT INTO DetailImportForm (Product_id, ImportForm_id,ImportPrice,Quantity, Total) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement;    
         try {

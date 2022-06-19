@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Model.DetailBill;
 import Model.Product;
 
 /**
@@ -11,6 +12,6 @@ import Model.Product;
  * @author DELL
  */
 public interface DetailBillDAO {
-    int addDetailBill(Product p);
+    boolean addDetailBill(DetailBill detailBill, int id);
     
 }
