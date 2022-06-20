@@ -9,6 +9,7 @@ import Model.Employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,6 +78,11 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
     private TableColumn<Employee, String> usernameCol;
     @FXML
     private TableColumn<Employee, String> passwordCol;
+
+    String LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
+    String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String NUMBERS = "123456789";
+    String SPECIALS = "!@£$%^&*()#€";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -161,9 +167,10 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
                 String phoneNum = tbPhone.getText();
                 String email = tbEmail.getText();
                 String position = tbPosition.getText();
-                String username = "hihihi";
-                String password = "hehehe";
-                Employee employee = new Employee(name, citizenId, address, email, phoneNum, position, username, password);
+                String _pass = GeneratePassword(true, true, true, false, 6);
+                String username = email;
+                String password = citizenId;
+                Employee employee = new Employee(name, citizenId, address, phoneNum, email, position, username, password);
                 try {
                     if (EmployeeDAOImplement.getInstance().addEmployee(employee) == 1) {
                         ClearData();
@@ -237,10 +244,10 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
                 String phoneNum = tbPhone.getText();
                 String email = tbEmail.getText();
                 String position = tbPosition.getText();
-                String username = "hihihi";
-                String password = "hehehe";
-               
-                Employee employee = new Employee(iID, name, citizenId, address, email, phoneNum, position, username, password);
+
+                String username = tbUsername.getText();
+                String password = tbPassword.getText();
+                Employee employee = new Employee(iID, name, citizenId, address, phoneNum, email, position, username, password);
                 try {
                     if (EmployeeDAOImplement.getInstance().updateEmployee(employee) == 1) {
                         ClearData();
@@ -304,6 +311,38 @@ public class EmployeeController implements Initializable, EventHandler<ActionEve
         tbPosition.setText("");
         tbUsername.setText("");
         tbPassword.setText("");
+    }
+
+    public String GeneratePassword(Boolean useLowercase, Boolean useUppercase, Boolean useNumbers, Boolean useSpecial,
+            int passwordSize) {
+        char[] _password = new char[passwordSize];
+        String charSet = "";
+        Random _random = new Random();
+        int counter;
+
+        if (useLowercase) {
+            charSet += LOWER_CASE;
+        }
+
+        if (useUppercase) {
+            charSet += UPPER_CASE;
+        }
+
+        if (useNumbers) {
+            charSet += NUMBERS;
+        }
+
+        if (useSpecial) {
+            charSet += SPECIALS;
+        }
+
+        for (counter = 0; counter < passwordSize; counter++) {
+            _password[counter] = charSet.charAt(_random.nextInt((charSet.length() - 1)));
+        }
+
+        System.out.print(_password);
+
+        return _password.toString();
     }
 
 }

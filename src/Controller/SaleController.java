@@ -179,20 +179,35 @@ public class SaleController implements Initializable, EventHandler<ActionEvent> 
             float presentPrice = temp_product.getPrice();
 
             float tem = 0;
+            //if (temp_product.getQuantities())
 
             boolean isFound = false;
             for (DetailBill db : detailBillData) {
                 if (db.getProduct_id() == ProductId) {
-                    int temp = db.getQuantity();
-                    db.setQuantity(quantity + temp);
                     isFound = true;
+                    int temp = db.getQuantity();
+                    if (temp_product.getQuantities() > temp) {
+                        db.setQuantity(quantity + temp);
+
+                    } else {
+                        Notifications.create().title("WARNING").text("The quantity of product is not enough.")
+                                .showWarning();
+
+                    }
+
                 }
             }
 
             if (!isFound) {
-                DetailBill db = new DetailBill(ProductId, name, quantity, presentPrice);
-                detailBillData.add(db);
-                Carttb.setItems(detailBillData);
+                if (temp_product.getQuantities() >= 1) {
+                    DetailBill db = new DetailBill(ProductId, name, quantity, presentPrice);
+                    detailBillData.add(db);
+                    Carttb.setItems(detailBillData);
+                } else {
+                    Notifications.create().title("WARNING").text("The quantity of product is not enough.")
+                            .showWarning();
+                }
+
             } else {
                 Carttb.refresh();
             }
